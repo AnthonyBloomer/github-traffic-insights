@@ -1,0 +1,112 @@
+{
+  "dashboard": {
+    "title": "Github Traffic Stats",
+    "icon":"bar-chart",
+    "visibility": "owner",
+    "editable": "editable_by_owner",
+    "metadata": {
+      "version": 1
+    },
+    "widgets": [
+      {
+        "visualization": "facet_table",
+        "data": [
+          {
+            "nrql": "SELECT sum(`uniques`), sum(`count`) FROM Clone FACET repo_name since 14 days ago"
+          }
+        ],
+        "presentation": {
+          "title": "Clones",
+          "notes": null,
+          "drilldown_dashboard_id": null
+        }
+      },
+      {
+        "visualization": "facet_table",
+        "data": [
+          {
+            "nrql": "SELECT sum(`uniques`), sum(`count`) FROM Referral FACET repo_name since 14 days ago"
+          }
+        ],
+        "presentation": {
+          "title": "Referrals",
+          "notes": null,
+          "drilldown_dashboard_id": null
+        }
+      },
+      {
+        "visualization": "facet_table",
+
+        "data": [
+          {
+            "nrql": "SELECT sum(`uniques`), sum(`count`) FROM View FACET repo_name since 14 days ago"
+          }
+        ],
+        "presentation": {
+          "title": "Views",
+          "notes": null,
+          "drilldown_dashboard_id": null
+        }
+      },
+      {
+        "visualization": "facet_pie_chart",
+
+        "data": [
+          {
+            "nrql": "SELECT sum(count) FROM Referral FACET referrer LIMIT 10 SINCE 604800 seconds ago EXTRAPOLATE"
+          }
+        ],
+        "presentation": {
+          "title": "Unique Referrers",
+          "notes": null,
+          "drilldown_dashboard_id": null
+        }
+      },
+      {
+        "visualization": "faceted_area_chart",
+        "data": [
+          {
+            "nrql": "SELECT sum(count) FROM View SINCE 2 WEEKS ago TIMESERIES 1 week facet repo_name "
+          }
+        ],
+        "presentation": {
+          "title": "Views Over Time",
+          "notes": null
+        }
+      },
+      {
+        "visualization": "faceted_area_chart",
+        "data": [
+          {
+            "nrql": "SELECT sum(count) FROM Clone SINCE 2 WEEKS ago TIMESERIES 1 week facet repo_name "
+          }
+        ],
+        "presentation": {
+          "title": "Clones Over Time",
+          "notes": null
+        }
+      },
+      {
+        "visualization": "facet_table",
+        "data": [
+          {
+            "nrql": "SELECT sum(count) from ReferralPath facet repo_name, path since 14 days ago"
+          }
+        ],
+        "presentation": {
+          "title": "Top Referral Paths",
+          "notes": null,
+          "drilldown_dashboard_id": null
+        }
+      }
+    ],
+    "filter": {
+      "event_types": [
+        "Clones",
+        "Referrals",
+        "Views"
+      ],
+      "attributes": []
+    }
+  }
+}

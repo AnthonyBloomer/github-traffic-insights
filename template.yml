@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Lambda function to send your Github traffic statistics to New Relic Insights.
+Resources:
+  Github:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.8
+      CodeUri: .
+      Description: ''
+      MemorySize: 128
+      Timeout: 300
+      Role: 'arn:aws:iam::368927449855:role/service-role/github-role-p5z8eou4'
+      Events:
+        Schedule1:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 0 1/15 * ? *)
+      Environment:
+        Variables:
+          GITHUB_TOKEN: GITHUB_TOKEN
+          GITHUB_USERNAME: GITHUB_USERNAME
+          NEW_RELIC_ACCOUNT_ID: NEW_RELIC_ACCOUNT_ID
+          NEW_RELIC_INSERT_KEY: NEW_RELIC_INSERT_KEY
